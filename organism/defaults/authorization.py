@@ -1,0 +1,2 @@
+class AuthorizationHandler(object):
+    pass
