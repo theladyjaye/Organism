@@ -13,5 +13,5 @@ class Jinja2View(object):
         response = self.context.response
         template = jinja2.get_template(self.view)
         
-        response.headers.add_header("content-type", "text/html", charset="utf-8")
+        response.headers.add("content-type", "text/html", charset="utf-8")
         return template.render(self.model) + "<pre>{0}</pre>".format(str(self.context.environ))

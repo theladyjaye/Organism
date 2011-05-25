@@ -9,7 +9,7 @@ class Redirect(Action):
         self.response = None
         
     def __call__(self):
-        self.response.headers.add_header("location", self.url)
+        self.response.headers.add("location", self.url)
         self.response.status = Response.MOVED_TEMPORARILY
         return None
         

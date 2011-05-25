@@ -1,4 +1,4 @@
-from wsgiref.headers import Headers
+from organism.net.headers import Headers
 class Response(object):
     OK                = "200 OK"
     MOVED_PERMANENTLY = "301 Moved Permanently"
@@ -9,21 +9,29 @@ class Response(object):
     def __init__(self, handler, cookies=None):
         self.handler = handler
         self.status  = Response.OK
-        self.headers = Headers([("content-type", "text/plain; charset=utf-8")])
+        
+        self.headers = Headers()
+        self.headers.add("content-type", "text/plain", charset="utf-8")
+        
         self.cookies = None if cookies is None else cookies()
+        self.out     = []
+        
+    def write(self, value):
+        self.out.append(value)
         
     def __call__(self, result=None):
         value = None
         
         if result is not None:
             value = result()
+            
+            if value is not None:
+                self.out.append(value.encode("utf-8"))
         
         if self.cookies is not None and len(self.cookies) > 0:
-            for cookie in self.cookies.items():
-                self.headers.add_header("Set-Cookie", "foo=bar; path=/")
+            for cookie in self.cookies.header_items():
+                self.headers.add("Set-Cookie", cookie)
             
         self.handler(self.status, self.headers.items())
-        
-        if value is not None:
-            return [value.encode("utf-8")]
+        return self.out
             

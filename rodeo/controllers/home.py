@@ -9,6 +9,7 @@ class HomeController(Controller):
         model["title"] = "Welcome to uWSGI"
         model["name"]  = "Adam"
         
-        self.context.response.cookies.add_cookie("foo", "bar")
+        self.context.response.write(self.context.request.cookies["pogo;=Nano=1;"])
+        self.context.response.cookies.add("pogo;=Nano=1;", "dog?;goober;=chunk")
         
         return self.view("index.html", model)        
