@@ -20,7 +20,7 @@ class CookieHandler(object):
             self.parse(data)
     
     
-    def add(self, name, value, path="/", expires=None, domain=None, secure=None, httponly=None):
+    def add(self, name, value, path=None, expires=None, domain=None, secure=None, httponly=None):
         self.cookies[name] = {"value":urllib.quote_plus(value),
                                 "path":path,
                                 "expires":expires,
@@ -31,26 +31,28 @@ class CookieHandler(object):
     
     def header_items(self):
         # Set-Cookie: name=foo; Domain=.foo.com; Path=/; Expires=Wed, 13-Jan-2021 22:23:01 GMT; HttpOnly
-        parts  = []
-        
+
         for key in self.cookies:
-            
+            parts = []
             parts.append(urllib.quote_plus(key) + "=" + self.cookies[key]["value"])
-            parts.append("Path=" + self.cookies[key]["path"])
             
+            if self.cookies[key]["path"] is not None:
+                parts.append("path=" + self.cookies[key]["path"])
+                
             if self.cookies[key]["expires"] is not None:
-                parts.append("Expires=" + self.cookies[key]["expires"])
+                parts.append("expires=" + self.cookies[key]["expires"])
                 
             if self.cookies[key]["domain"] is not None:
-                parts.append("Domain=" + self.cookies[key]["domain"])
+                parts.append("domain=" + self.cookies[key]["domain"])
             
             if self.cookies[key]["secure"] is not None:
-                parts.append("Secure")
+                parts.append("secure")
             
             if self.cookies[key]["httponly"] is not None:
                 parts.append("HttpOnly")
-    
-        yield "; ".join(parts)
+                
+            yield "; ".join(parts)
+            
         
     def items(self):
         for key in self.cookies:

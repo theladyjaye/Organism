@@ -1,10 +1,10 @@
 from organism import Organism
-from organism.defaults.router import Router
-from organism.defaults.cookies import CookieHandler
-from organism.defaults.sessions import RedisSessions
-from organism.defaults.body import UrlEncodedBody
-from organism.defaults.views import Jinja2View
-from organism.defaults.authorization import AuthorizationHandler
+from organism.lucy.router import Router
+from organism.lucy.cookies import CookieHandler
+from organism.lucy.sessions import RedisSessions
+from organism.lucy.body import UrlEncodedBody
+from organism.lucy.views import Jinja2View
+from organism.lucy.authorization import AuthorizationHandler
 
 
 from rodeo.controllers.home import HomeController

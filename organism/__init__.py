@@ -22,6 +22,7 @@ class Organism(object):
         context             = HttpContext()
         context.request     = Request(**handlers)
         context.response    = Response(start_response, self.cookies)
+        context.session     = None if self.sessions is None else  self.sessions(context.request)
         context.view_engine = self.views
         context.environ     = environ
         
@@ -38,4 +39,4 @@ class Organism(object):
         else:
             return
         
-        return context.response(result)
+        return context.response(session=context.session, result=result)

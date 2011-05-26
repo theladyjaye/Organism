@@ -19,7 +19,7 @@ class Response(object):
     def write(self, value):
         self.out.append(value)
         
-    def __call__(self, result=None):
+    def __call__(self, session=None, result=None):
         value = None
         
         if result is not None:
@@ -28,10 +28,14 @@ class Response(object):
             if value is not None:
                 self.out.append(value.encode("utf-8"))
         
+        if self.cookies is not None and session is not None:
+            self.cookies.add(session.key, session.id, path="/")
+            
         if self.cookies is not None and len(self.cookies) > 0:
             for cookie in self.cookies.header_items():
                 self.headers.add("Set-Cookie", cookie)
-            
+        
+        #self.headers.add("Set-Cookie", "PHPSESSID=ushobtc017r9eibetu6rhnjcm0", path="/")    
         self.handler(self.status, self.headers.items())
         return self.out
             

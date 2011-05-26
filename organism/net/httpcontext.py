@@ -4,4 +4,5 @@ class HttpContext(object):
         self.request  = None
         self.response = None
         self.views    = None
+        self.session  = None
         self.environ  = None

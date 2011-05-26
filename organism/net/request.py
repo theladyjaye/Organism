@@ -10,9 +10,7 @@ class Request(object):
         self.charset        = environ.get("HTTP_ACCEPT_CHARSET", "utf-8")
         self.remote_address = environ.get("REMOTE_ADDR", "0.0.0.0")
         
-        
         self.cookies = None if cookies is None else cookies(environ.get("HTTP_COOKIE", None))
-        self.session = None if session is None else session()
         
         try:
             length = int(environ.get("CONTENT_LENGTH", "0"))
