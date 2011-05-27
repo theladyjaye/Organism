@@ -4,6 +4,9 @@
 # environ["HTTP_COOKIE"] = name=value; name2=value2
 
 import urllib
+import datetime
+import email.utils
+import calendar
 class CookieHandler(object):
     """
     First the name-value pair ('ppkcookie1=testcookie')
@@ -21,9 +24,19 @@ class CookieHandler(object):
     
     
     def add(self, name, value, path=None, expires=None, domain=None, secure=None, httponly=None):
+        
+        if expires is not None: 
+            
+            if type(expires) is not datetime.datetime:
+                raise TypeError("Cookie expire time must be a datetime")
+            else:
+                time_tuple = calendar.timegm(expires.utctimetuple())
+                expires    = email.utils.formatdate(time_tuple, localtime=False, usegmt=True)
+        
         self.cookies[name] = {"value":urllib.quote_plus(value),
                                 "path":path,
-                                "expires":expires,
+                                #Wdy, DD-Mon-YYYY HH:MM:SS GMT
+                                "expires":expires if expires is not None else None,
                                 "domain":domain,
                                 "secure":secure,
                                 "httponly":httponly

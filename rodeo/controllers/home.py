@@ -1,5 +1,5 @@
 from organism.system.controllers import Controller
-
+import datetime
 class HomeController(Controller):
     
     def index(self):
@@ -11,6 +11,7 @@ class HomeController(Controller):
         
         #self.context.response.write(self.context.request.cookies["pogo;=Nano=1;"])
         #self.context.response.cookies.add("pogo;=Nano=1;", "dog?;goober;=chunk")
-        self.context.response.cookies.add("pogo", "cat", path="/", expires="Sat, 25-May-2013 05:38:18 GMT", httponly=True)
+        x = datetime.datetime.today() + datetime.timedelta(days=1)
+        self.context.response.cookies.add("pogo", "cat", path="/", expires=x, httponly=True)
         
         return self.view("index.html", model)        
