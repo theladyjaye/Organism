@@ -30,18 +30,17 @@ class CookieHandler(object):
             if type(expires) is not datetime.datetime:
                 raise TypeError("Cookie expire time must be a datetime")
             else:
+                #Wdy, DD-Mon-YYYY HH:MM:SS GMT
                 time_tuple = calendar.timegm(expires.utctimetuple())
                 expires    = email.utils.formatdate(time_tuple, localtime=False, usegmt=True)
         
         self.cookies[name] = {"value":urllib.quote_plus(value),
                                 "path":path,
-                                #Wdy, DD-Mon-YYYY HH:MM:SS GMT
                                 "expires":expires if expires is not None else None,
                                 "domain":domain,
                                 "secure":secure,
                                 "httponly":httponly
                                 }
-    
     def header_items(self):
         # Set-Cookie: name=foo; Domain=.foo.com; Path=/; Expires=Wed, 13-Jan-2021 22:23:01 GMT; HttpOnly
 
