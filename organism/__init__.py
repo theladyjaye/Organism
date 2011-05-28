@@ -15,7 +15,7 @@ class Organism(object):
         
     def __call__(self, environ, start_response):
         handlers = {"environ":environ,
-                    "body": self.body,
+                    "post": self.body,
                     "cookies":self.cookies,
                     "session":self.sessions}
                     

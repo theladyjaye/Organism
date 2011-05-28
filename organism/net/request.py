@@ -1,6 +1,6 @@
 class Request(object):
     
-    def __init__(self, environ, body=None, cookies=None, session=None):
+    def __init__(self, environ, post=None, cookies=None, session=None):
         
         self.path           = environ["PATH_INFO"]
         self.method         = environ.get("REQUEST_METHOD", "GET")
@@ -14,9 +14,12 @@ class Request(object):
         
         try:
             length = int(environ.get("CONTENT_LENGTH", "0"))
-            self.body = None if body is None else body(length, environ)
+            values = {"content_type":environ.get("CONTENT_TYPE", "text/plain"),
+                      "length": length,
+                      "data":environ["wsgi.input"]}
+            self.post = None if post is None else post(**values)
         except ValueError, e:
-            self.body = None if body is None else body(-1, environ)
+            self.post = None if post is None else post(None, -1, None)
         
         #
         #if self.method.upper() == "POST":
