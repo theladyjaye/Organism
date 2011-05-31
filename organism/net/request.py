@@ -35,7 +35,8 @@ class Request(object):
         self.language       = environ.get("HTTP_ACCEPT_LANGUAGE", "en-US")
         self.charset        = environ.get("HTTP_ACCEPT_CHARSET", "utf-8")
         self.remote_address = environ.get("REMOTE_ADDR", "0.0.0.0")
-        
+        self.params         = RequestParams({})
+        self.files          = RequestParams({})
         
         self.cookies = None if cookies is None else cookies(environ.get("HTTP_COOKIE", None))        
         
@@ -51,7 +52,7 @@ class Request(object):
             parser = request_parser()
             
             querystring = parser.parse_querystring(environ["QUERY_STRING"])
-            self.params = RequestParams(querystring)
+            self.params.update(querystring)
             
             
             if content_length > 0:
@@ -66,7 +67,4 @@ class Request(object):
                 
                 
                 #parser.set_files(self.files)
-        else:
-            self.params         = RequestParams()
-            self.files          = RequestParams()
             
