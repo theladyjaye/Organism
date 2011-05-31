@@ -2,7 +2,7 @@ from organism import Organism
 from organism.lucy.router import Router
 from organism.lucy.cookies import CookieHandler
 from organism.lucy.sessions import RedisSessions
-from organism.lucy.posts import Posts
+from organism.lucy.requestparser import RequestParser
 from organism.lucy.views import Jinja2View
 from organism.lucy.authorization import AuthorizationHandler
 
@@ -12,7 +12,7 @@ from rodeo.controllers.catchall import CatchAllController
 from rodeo.views import RodeoViewEngine
 
 critter = {"router":Router,
-           "body":Posts,
+           "request_parser":RequestParser,
            "cookies":CookieHandler, 
            "sessions":RedisSessions,
            "autorization":AuthorizationHandler,

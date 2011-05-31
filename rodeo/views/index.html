@@ -6,5 +6,25 @@
 </head>
 <body>
 	<h1>Hello {{ name }}</h1>
+	<hr>
+	<form action="/" method="post" enctype="multipart/form-data">
+		<div>
+			<label for="lucy">Lucy</label>
+			<input type="text" name="lucy" id="lucy"/>
+		</div>
+		<div>
+			<label for="ollie">Ollie</label>
+			<input type="text" name="ollie" id="ollie"/>
+		</div>
+		<div>
+			<label for="file1">File 1</label>
+			<input type="file" name="file1" id="file1"/>
+		</div>
+		<div>
+			<label for="file2">File 2</label>
+			<input type="file" name="file2" id="file2"/>
+		</div>
+		<div><input type="submit" /></div>
+	</form>
 </body>
 </html>

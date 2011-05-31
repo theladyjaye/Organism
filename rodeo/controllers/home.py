@@ -15,7 +15,10 @@ class HomeController(Controller):
         #httpcontext.response.cookies.add("pogo;=Nano=1;", "dog?;goober;=chunk")
         x = datetime.datetime.today() + datetime.timedelta(days=1)
         self.context.response.cookies.add("pogo", "cat", path="/", expires=x, httponly=True)
+
         
+        httpcontext.response.write("Value of Request Param 'lucy': " + str(httpcontext.request.params["lucy"]))
         
-        httpcontext.response.write("Value of Lucy: " + httpcontext.request.post["Lucy"])
+        #httpcontext.request.files["file1"]
+        #httpcontext.response.write("Value of Lucy: " + httpcontext.request.post["Lucy"])
         return self.view("index.html", model)        

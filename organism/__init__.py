@@ -5,17 +5,17 @@ from organism.net.httpcontext import HttpContext
 class Organism(object):
     
     def __init__(self, options):
-        self.router        = options["router"]() if "router" in options else None
-        self.authorization = options["authorization"]() if "authorization" in options else None
-        self.sessions      = options["sessions"] if "sessions" in options else None
-        self.cookies       = options["cookies"] if "cookies" in options else None
-        self.body          = options["body"] if "body" in options else None
-        self.views         = options["views"] if "views" in options else None
+        self.router         = options["router"]() if "router" in options else None
+        self.authorization  = options["authorization"]() if "authorization" in options else None
+        self.sessions       = options["sessions"] if "sessions" in options else None
+        self.cookies        = options["cookies"] if "cookies" in options else None
+        self.request_parser = options["request_parser"] if "request_parser" in options else None
+        self.views          = options["views"] if "views" in options else None
         
         
     def __call__(self, environ, start_response):
         handlers = {"environ":environ,
-                    "post": self.body,
+                    "request_parser": self.request_parser,
                     "cookies":self.cookies,
                     "session":self.sessions}
                     
